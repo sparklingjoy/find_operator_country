@@ -1,0 +1,403 @@
+import streamlit as st
+import band
+import op
+import country
+
+bands = band.bands
+operators = op.operators
+countries = country.countries
+
+st.title("Find Operators and Countries")
+
+
+def freq_to_band(frequency_to_evaluate):
+    try:
+        int(frequency_to_evaluate)
+        print(f"{frequency_to_evaluate} MHz is used in band:")
+    except ValueError:
+        print("Input must be integer in MHz.")
+
+    matched_bands = []
+
+    for band in bands:
+        if band.is_in_range(frequency_to_evaluate):
+            matched_bands.append(band.generation_number)
+    print(matched_bands)
+    return matched_bands
+
+
+def band_to_freq(band_to_evaluate):
+    try:
+        print(f"{band_to_evaluate} used:")
+
+    except ValueError:
+        print("Input must be integer in MHz.")
+
+    matched_frequency = []
+
+    for band in bands:
+        if band.covers(band_to_evaluate):
+            frequency_range = (
+                "from "
+                + str(band.minimum)
+                + " MHz to "
+                + str(band.maximum)
+                + " MHz with "
+                + str(band.maximum - band.minimum)
+                + " MHz span"
+            )
+            print(frequency_range)
+            matched_frequency.append(frequency_range)
+    return matched_frequency
+
+
+# Sidebar menu begins
+
+st.sidebar.header("Frquency ⇔ Band")
+
+asked_frequency = st.sidebar.number_input(
+    "Frequency in MHz?", value=1880, placeholder="Input frequency in MHz"
+)
+st.sidebar.write(" , ".join(freq_to_band(asked_frequency)))
+
+# space
+st.sidebar.write(" ")
+
+asked_band = st.sidebar.text_input(
+    "Band code?", value="n77", placeholder="Input band code"
+)
+st.sidebar.write(" , ".join(band_to_freq(asked_band)))
+
+
+# LTE Operator Finder
+st.header("LTE Operators")
+
+asked_bands = st.multiselect(
+    "Which 4G/LTE band?",
+    [
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B7",
+        "B8",
+        "B11",
+        "B12",
+        "B13",
+        "B17",
+        "B18",
+        "B19",
+        "B20",
+        "B21",
+        "B26",
+        "B28",
+        "B29",
+        "B30",
+        "B38",
+        "B39",
+        "B40",
+        "B41",
+        "B42",
+        "B46",
+        "B66",
+        "B71",
+    ],
+    ["B1", "B42"],
+)
+
+for band in asked_bands:
+    operator_set = []
+    headquarter_set = []
+    for operator in operators:
+        if operator.has_bands(band):
+            operator_set.append(operator.name)
+            headquarter_set.append(operator.headquarters)
+    st.write(f"**{band} band**: {len(operator_set)} operators")
+    # st.write("")
+    st.write(", ".join(operator_set))
+    st.write("Their **headquarters** are located in:")
+    st.write(", ".join(headquarter_set))
+
+
+# 5G Operator Finder
+st.header("5G Operators")
+
+asked_bands = st.multiselect(
+    "Which 5G band?",
+    [
+        "n1",
+        "n2",
+        "n3",
+        "n5",
+        "n7",
+        "n8",
+        "n20",
+        "n28",
+        "n38",
+        "n40",
+        "n41",
+        "n46",
+        "n66",
+        "n71",
+        "n77",
+        "n78",
+        "n79",
+        "n257",
+        "n258",
+        "n260",
+        "n261",
+    ],
+    ["n38", "n77"],
+)
+
+for band in asked_bands:
+    operator_set = []
+    headquarter_set = []
+    for operator in operators:
+        if operator.has_bands(band):
+            operator_set.append(operator.name)
+            headquarter_set.append(operator.headquarters)
+    st.write(f"**{band} band**: {len(operator_set)} operators")
+    # st.write("")
+    st.write(", ".join(operator_set))
+    st.write("Their **headquarters** are located in:")
+    st.write(", ".join(headquarter_set))
+
+
+# Country of Operator Finder
+class Country:
+    def __init__(self, name, *operators):
+        self.name = name
+        self.operators = operators
+
+    def has_operators(self, player):
+        # print("in loop")
+        return player in self.operators
+
+
+# Find Country with Operator
+
+st.header("Countries with Operators")
+
+asked_operators = st.multiselect(
+    "Which operator?",
+    [
+        "AT&T",
+        "America Movil",
+        "Axiata",
+        "BSNL Mobile",
+        "Bharti Airtel",
+        "CK Hutchison",
+        "China Broadcast",
+        "China Mobile",
+        "China Telecom",
+        "China Unicom",
+        "Deutsche Telekom",
+        "Emirates",
+        "Globe Telecom",
+        "KDDI",
+        "MTN",
+        "MTN Irancell",
+        "MegaFon",
+        "Mobile TeleSystems",
+        "NTT Docomo",
+        "Ooredoo",
+        "Orange",
+        "PLDT",
+        "PT Telekomunikasi",
+        "Reliance Jio",
+        "Softbank",
+        "T-Mobile",
+        "Telefonica",
+        "Telenor",
+        "VEON",
+        "Verizon",
+        "Viettel",
+        "Vodacom",
+        "Vodafone Group",
+        "Vodafone Idea",
+    ],
+    ["Verizon", "Bharti Airtel"],
+)
+
+for player in asked_operators:
+    country_set = []
+    for country in countries:
+        # print("Player=", player)
+        if country.has_operators(player):
+            country_set.append(country.name)
+    st.write(f"**{player}** is serviced in {len(country_set)} countries:")
+    st.write(", ".join(country_set))
+
+# Find Operators in Countries
+
+st.header("Operators in Countries")
+
+asked_countries = st.multiselect(
+    "Which country?",
+    [
+        "Afghanistan",
+        "Albania",
+        "Algeria",
+        "Argentina",
+        "Armenia",
+        "Australia",
+        "Austria",
+        "Bangladesh",
+        "Belarus",
+        "Belgium",
+        "Benin",
+        "Bosnia and Herzegovina",
+        "Botswana",
+        "Brazil",
+        "Bulgaria",
+        "Burkina Faso",
+        "Burundi",
+        "Cambodia",
+        "Cameroon",
+        "Canada",
+        "Central African Republic",
+        "Chad",
+        "Chile",
+        "China",
+        "Columbia",
+        "Congo",
+        "Congo",
+        "Costa",
+        "Croatia",
+        "Cyprus",
+        "Czech Republic",
+        "Denmark",
+        "Dominican Republic",
+        "East Timor",
+        "Ecuador",
+        "Egypt",
+        "El Salvador",
+        "Equatorial Guinea",
+        "Eswatini",
+        "Ethiopia",
+        "Fiji",
+        "Finland",
+        "France",
+        "Gabon",
+        "Germany",
+        "Ghana",
+        "Greece",
+        "Guatemala",
+        "Guernsey",
+        "Guinea",
+        "Guinea Bissau",
+        "Haiti",
+        "Honduras",
+        "Hong Kong",
+        "Hungary",
+        "Iceland",
+        "India",
+        "Indonesia",
+        "Iran",
+        "Iran",
+        "Iraq",
+        "Ireland",
+        "Italy",
+        "Ivory Coast",
+        "Japan",
+        "Jersey",
+        "Jordan",
+        "Kazakhstan",
+        "Kenya",
+        "Kenya",
+        "Kuwait",
+        "Kyrgyzstan",
+        "Laos",
+        "Lesotho",
+        "Liberia",
+        "Liechtenstein",
+        "Luxemboug",
+        "Macau",
+        "Madagascar",
+        "Malawi",
+        "Malaysia",
+        "Maldive",
+        "Mali",
+        "Mauritania",
+        "Mexico",
+        "Moldova",
+        "Montenegro",
+        "Morocco",
+        "Mozambique",
+        "Myanmar",
+        "Nepal",
+        "Netherlands",
+        "New Zealand",
+        "Nicaragua",
+        "Niger",
+        "Nigeria",
+        "North Macedonia",
+        "Northan Cyprus",
+        "Norway",
+        "Oman",
+        "Pakistan",
+        "Panama",
+        "Paraguay",
+        "Peru",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Puerto Rico",
+        "Qatar",
+        "Romania",
+        "Russia",
+        "Rwanda",
+        "Saudi Arabia",
+        "Senegal",
+        "Serbia",
+        "Seychelles",
+        "Slovakia",
+        "Slovenia",
+        "South Africa",
+        "South Sdan",
+        "Spain",
+        "Sri Lanka",
+        "Sudan",
+        "Sweden",
+        "Syria",
+        "Tanzania",
+        "Thailand",
+        "Togo",
+        "Tonga",
+        "Tunisia",
+        "Turkey",
+        "Uganda",
+        "Ukraine",
+        "United Arab Emirates",
+        "United Kingdom",
+        "United States",
+        "Uruguay",
+        "Uzbekistan",
+        "Venezuela",
+        "Vietnam",
+        "Virgin Islands",
+        "Yemen",
+        "Zambia",
+    ],
+    ["United States", "Brazil"],
+)
+
+for q_country in asked_countries:
+    operator_set = []
+    for country in countries:
+        if country.name == q_country:
+            operator_set = country.operators
+    st.write(f"**{q_country}** has {len(operator_set)} operators:")
+    st.write(", ".join(operator_set))
+
+st.write("")
+st.write("")
+with st.expander("About this app"):
+    st.write(
+        "This app is a compilation of public domain web information on the top 30 mobile operators. They represent 85\% of all subscribers, but 15\% are not captured. Here are the main reference web links",
+        "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
+        "https://en.wikipedia.org/wiki/LTE_frequency_bands",
+        "https://en.wikipedia.org/wiki/5G_NR_frequency_bands",
+    )
