@@ -22,7 +22,7 @@ countries = [
     Country("India", "Bharti Airtel", "Reliance Jio", "Vodafone Idea", "BSNL Mobile"),
     Country("Pakistan", "China Mobile", "Telenor", "Emirates", "VEON"),
     Country("Macau", "China Telecom", "CK Huchinson"),
-    Country("Japan", "NTT", "KDDI", "Softbank"),
+    Country("Japan", "NTT Docomo", "KDDI", "Softbank"),
     Country("United States", "AT&T", "Verizon", "T-Mobile"),
     Country(
         "Canada",

@@ -236,7 +236,7 @@ for player in asked_operators:
     for operator in operators:
         if operator.name == player:
             st.write(
-                f"**{player}'** uses {len(operator.bands)} bands in **{len(country_set)}** countries, headquartered in **{operator.headquarters}**"
+                f"**{player}** uses {len(operator.bands)} bands in **{len(country_set)}** countries with a total of **{operator.subscribers}** million subscribers, headquartered in **{operator.headquarters}**"
             )
             st.write(", ".join(operator.bands))
             st.write(", ".join(country_set))
