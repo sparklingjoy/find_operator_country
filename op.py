@@ -77,7 +77,7 @@ operators = [
         "n258",
     ),
     Operator("Orange", "France", 249, "B1", "B3", "B7", "B20", "B28"),
-    Operator("Vodafone Idea", "India", 231, "B3", "B8", "B1", "B40", "B41"),
+    Operator("Vodafone Idea", "India", 231, "B3", "B8", "B1", "B40", "B41", "n78", "n258"), # https://www.lightreading.com/open-ran/vodafone-idea-launches-open-ran-pilot-in-india-with-mavenir 2024/3/14 added
     Operator(
         "AT&T",
         "United States",
