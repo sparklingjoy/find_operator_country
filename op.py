@@ -85,6 +85,7 @@ operators = [
         "B2",
         "B4",
         "B12",
+        "B14",  # 2024/3/14 追加 https://urgentcomm.com/2021/02/22/att-says-firstnet-band-14-buildout-more-than-90-done-adoption-tops-2-million-connections/
         "B17",
         "B29",
         "B30",

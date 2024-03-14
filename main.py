@@ -85,6 +85,7 @@ asked_bands = st.multiselect(
         "B11",
         "B12",
         "B13",
+        "B14",  # 2024/3/14追加
         "B17",
         "B18",
         "B19",
@@ -102,22 +103,23 @@ asked_bands = st.multiselect(
         "B46",
         "B66",
         "B71",
+        "B85",  # 2024/3/14追加
     ],
     ["B1", "B42"],
 )
 
 for band in asked_bands:
     operator_set = []
-    headquarter_set = []
+    # headquarter_set = []
     for operator in operators:
         if operator.has_bands(band):
             operator_set.append(operator.name)
-            headquarter_set.append(operator.headquarters)
+            # headquarter_set.append(operator.headquarters)
     st.write(f"**{band} band**: {len(operator_set)} operators")
     # st.write("")
     st.write(", ".join(operator_set))
-    st.write("Their **headquarters** are located in:")
-    st.write(", ".join(headquarter_set))
+    # st.write("Their **headquarters** are located in:")
+    # st.write(", ".join(headquarter_set))
 
 
 # 5G Operator Finder
@@ -153,19 +155,19 @@ asked_bands = st.multiselect(
 
 for band in asked_bands:
     operator_set = []
-    headquarter_set = []
+    # headquarter_set = []
     for operator in operators:
         if operator.has_bands(band):
             operator_set.append(operator.name)
-            headquarter_set.append(operator.headquarters)
+            # headquarter_set.append(operator.headquarters)
     st.write(f"**{band} band**: {len(operator_set)} operators")
     # st.write("")
     st.write(", ".join(operator_set))
-    st.write("Their **headquarters** are located in:")
-    st.write(", ".join(headquarter_set))
+    # st.write("Their **headquarters** are located in:")
+    # st.write(", ".join(headquarter_set))
 
 
-# Country of Operator Finder
+# Operator Profile
 class Country:
     def __init__(self, name, *operators):
         self.name = name
@@ -176,9 +178,9 @@ class Country:
         return player in self.operators
 
 
-# Find Country with Operator
+# Find Operator Information
 
-st.header("Countries with Operators")
+st.header("Operator Information")
 
 asked_operators = st.multiselect(
     "Which operator?",
@@ -223,16 +225,26 @@ asked_operators = st.multiselect(
 
 for player in asked_operators:
     country_set = []
+
     for country in countries:
         # print("Player=", player)
         if country.has_operators(player):
             country_set.append(country.name)
-    st.write(f"**{player}** is serviced in {len(country_set)} countries:")
-    st.write(", ".join(country_set))
+    # st.write(
+    #     f"**{player}** headquarter is in is serviced in {len(country_set)} countries:"
+    # )
+    for operator in operators:
+        if operator.name == player:
+            st.write(
+                f"**{player}'** uses {len(operator.bands)} bands in **{len(country_set)}** countries, headquartered in **{operator.headquarters}**"
+            )
+            st.write(", ".join(operator.bands))
+            st.write(", ".join(country_set))
+
 
 # Find Operators in Countries
 
-st.header("Operators in Countries")
+st.header("Country Information")
 
 asked_countries = st.multiselect(
     "Which country?",
