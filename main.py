@@ -110,12 +110,18 @@ asked_bands = st.multiselect(
 
 for band in asked_bands:
     operator_set = []
-    # headquarter_set = []
+
+    for elem in bands:
+        if elem.generation_number == band:
+            dup_mode = ", ".join(elem.duplex)
     for operator in operators:
         if operator.has_bands(band):
             operator_set.append(operator.name)
             # headquarter_set.append(operator.headquarters)
-    st.write(f"**{band} band**: {len(operator_set)} operators")
+
+    st.write(
+        f"**{band} band** is in **{dup_mode}** mode with **{len(operator_set)}** operators"
+    )
     # st.write("")
     st.write(", ".join(operator_set))
     # st.write("Their **headquarters** are located in:")
@@ -155,12 +161,15 @@ asked_bands = st.multiselect(
 
 for band in asked_bands:
     operator_set = []
-    # headquarter_set = []
+    if elem.generation_number == band:
+        dup_mode = ", ".join(elem.duplex)
     for operator in operators:
         if operator.has_bands(band):
             operator_set.append(operator.name)
             # headquarter_set.append(operator.headquarters)
-    st.write(f"**{band} band**: {len(operator_set)} operators")
+    st.write(
+        f"**{band} band** is in **{dup_mode}** mode with **{len(operator_set)}** operators"
+    )
     # st.write("")
     st.write(", ".join(operator_set))
     # st.write("Their **headquarters** are located in:")
