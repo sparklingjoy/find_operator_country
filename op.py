@@ -77,7 +77,9 @@ operators = [
         "n258",
     ),
     Operator("Orange", "France", 249, "B1", "B3", "B7", "B20", "B28"),
-    Operator("Vodafone Idea", "India", 231, "B3", "B8", "B1", "B40", "B41", "n78", "n258"), # https://www.lightreading.com/open-ran/vodafone-idea-launches-open-ran-pilot-in-india-with-mavenir 2024/3/14 added
+    Operator(
+        "Vodafone Idea", "India", 231, "B3", "B8", "B1", "B40", "B41", "n78", "n258"
+    ),  # https://www.lightreading.com/open-ran/vodafone-idea-launches-open-ran-pilot-in-india-with-mavenir 2024/3/14 added
     Operator(
         "AT&T",
         "United States",
@@ -123,14 +125,13 @@ operators = [
         "B2",
         "B4",
         "B66",
-        "n77",
         "n2",
         "n5",
         "n66",
         "n77",
         "n260",
         "n261",
-    ),
+    ),  # duplicated n77 was removed
     Operator("Vodacom", "South Africa", 133, "B8", "B3", "B42"),
     Operator("Ooredoo", "Qatar", 121, "B3", "B8", "B1"),
     # T-Mobile may be part of Deutche Telecom, but left as it is
