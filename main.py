@@ -1,13 +1,12 @@
 import streamlit as st
 import band
 import op
+import re
 import country
 
 bands = band.bands
 operators = op.operators
 countries = country.countries
-
-st.title("Find Operators and Countries")
 
 
 def freq_to_band(frequency_to_evaluate):
@@ -26,6 +25,7 @@ def freq_to_band(frequency_to_evaluate):
     return matched_bands
 
 
+## バンド名から周波数範囲記述のstrを発生させる、引数はバンド名のstr
 def band_to_freq(band_to_evaluate):
     try:
         print(f"{band_to_evaluate} used:")
@@ -38,36 +38,73 @@ def band_to_freq(band_to_evaluate):
     for band in bands:
         if band.covers(band_to_evaluate):
             frequency_range = (
-                "from "
+                band.generation_number
+                + ": "
                 + str(band.minimum)
-                + " MHz to "
+                + " ~ "
                 + str(band.maximum)
-                + " MHz with "
+                + " MHz  ("
                 + str(band.maximum - band.minimum)
-                + " MHz span"
+                + " MHz)"
             )
             print(frequency_range)
             matched_frequency.append(frequency_range)
     return matched_frequency
 
 
-# Sidebar menu begins
+## バンドのリストからmainとsubの別々の周波数リストに返す
+## n###と三桁まで許容、そしてサブバンドコードのアルファベットは含まないことを$で表している
+def main_sub_split(band_list):
+    pattern = r"B\d{1,2}$|n\d{1,3}"  # B##, n##
+    main_band = []
+    sub_band = []
+    for element in band_list:
+        if re.match(pattern, element):
+            main_band.append(element)
+        else:
+            sub_band.append(element)
+    return main_band, sub_band
+
+
+## 複数のバンド名が入っている文字列をリストに変換する
+def str_to_list(string):
+    # カンマと前後のスペース複数の組み合わせ("\s*,\s*")か空白のみ("\s+")のいずれかをパターンとして指定、stripで両端の空白を除去
+    return re.split(r"\s*,\s*|\s+", string.strip())
+
+
+#### Sidebar menu begins
+
+## From frequency to band code coversion
 
 st.sidebar.header("Frquency ⇔ Band")
 
 asked_frequency = st.sidebar.number_input(
-    "Frequency in MHz?", value=1880, placeholder="Input frequency in MHz"
+    "Frequency in MHz?", value=3600, placeholder="Input single frequency value"
 )
-st.sidebar.write(" , ".join(freq_to_band(asked_frequency)))
 
-# space
+band_list = freq_to_band(asked_frequency)
+main_band, sub_band = main_sub_split(band_list)
+
+st.sidebar.write("**Main bands**")
+st.sidebar.write(" , ".join(main_band))
+st.sidebar.write("**Sub bands**")
+st.sidebar.write(" , ".join(sub_band))
+
+## space
 st.sidebar.write(" ")
 
 asked_band = st.sidebar.text_input(
-    "Band code?", value="n77", placeholder="Input band code"
+    "Band code?", value="B42, n77, B77D", placeholder="Input band code name(s)"
 )
-st.sidebar.write(" , ".join(band_to_freq(asked_band)))
 
+list_of_band = str_to_list(asked_band)
+for band in list_of_band:
+    band_range = band_to_freq(band)
+    st.sidebar.write("".join(band_range))
+
+
+# Find Operators and Countries
+st.title("Find Operators and Countries")
 
 # LTE Operator Finder
 st.header("LTE Operators")
