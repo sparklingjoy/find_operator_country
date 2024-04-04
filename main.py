@@ -85,10 +85,14 @@ asked_frequency = st.sidebar.number_input(
 band_list = freq_to_band(asked_frequency)
 main_band, sub_band = main_sub_split(band_list)
 
-st.sidebar.write("**Main bands**")
-st.sidebar.write(" , ".join(main_band))
-st.sidebar.write("**Sub bands**")
-st.sidebar.write(" , ".join(sub_band))
+if main_band:
+    st.sidebar.write("**Main bands**")
+    st.sidebar.write(" , ".join(main_band))
+    if sub_band:
+        st.sidebar.write("**Sub bands**")
+        st.sidebar.write(" , ".join(sub_band))
+else:
+    st.sidebar.write("Not found")
 
 ## space
 st.sidebar.write(" ")
