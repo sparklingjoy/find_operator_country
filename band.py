@@ -1,6 +1,6 @@
 class Band:
-    def __init__(self, generation_number, minimum, maximum, *duplex):
-        self.generation_number = generation_number
+    def __init__(self, name, minimum, maximum, *duplex):
+        self.name = name
         self.minimum = minimum
         self.maximum = maximum
         self.duplex = duplex
@@ -9,7 +9,7 @@ class Band:
         return self.minimum <= value <= self.maximum
 
     def covers(self, value):
-        return self.generation_number == value
+        return self.name == value
 
     def in_mode(self, value):
         return self.duplex == value

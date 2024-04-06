@@ -20,7 +20,7 @@ def freq_to_band(frequency_to_evaluate):
 
     for band in bands:
         if band.is_in_range(frequency_to_evaluate):
-            matched_bands.append(band.generation_number)
+            matched_bands.append(band.name)
     print(matched_bands)
     return matched_bands
 
@@ -38,7 +38,7 @@ def band_to_freq(band_to_evaluate):
     for band in bands:
         if band.covers(band_to_evaluate):
             frequency_range = (
-                band.generation_number
+                band.name
                 + ": "
                 + str(band.minimum)
                 + " ~ "
@@ -79,7 +79,7 @@ def str_to_list(string):
 st.sidebar.header("Frquency ⇔ Band")
 
 asked_frequency = st.sidebar.number_input(
-    "Frequency in MHz?", value=3600, placeholder="Input single frequency value"
+    "Frequency in MHz?", value=2150, placeholder="Input single frequency value"
 )
 
 band_list = freq_to_band(asked_frequency)
@@ -99,7 +99,7 @@ st.sidebar.write(" ")
 
 ## Band code to frequency conversion with multiselect menu
 # generates band code name list from band.py
-band_list_db = [band.generation_number for band in bands]
+band_list_db = [band.name for band in bands]
 
 asked_band = st.sidebar.multiselect(
     "Choose band",
@@ -172,7 +172,7 @@ for band in asked_bands:
     operator_set = []
 
     for elem in bands:
-        if elem.generation_number == band:
+        if elem.name == band:
             dup_mode = ", ".join(elem.duplex)
     for operator in operators:
         if operator.has_bands(band):
@@ -221,7 +221,7 @@ asked_bands = st.multiselect(
 
 for band in asked_bands:
     operator_set = []
-    if elem.generation_number == band:
+    if elem.name == band:
         dup_mode = ", ".join(elem.duplex)
     for operator in operators:
         if operator.has_bands(band):
