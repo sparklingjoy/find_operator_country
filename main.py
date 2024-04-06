@@ -74,7 +74,7 @@ def str_to_list(string):
 
 #### Sidebar menu begins
 
-## From frequency to band code coversion
+## Frequency to band code conversion
 
 st.sidebar.header("Frquency ⇔ Band")
 
@@ -97,14 +97,33 @@ else:
 ## space
 st.sidebar.write(" ")
 
-asked_band = st.sidebar.text_input(
-    "Band code?", value="B42, n77, B77D", placeholder="Input band code name(s)"
+## Band code to frequency conversion with multiselect menu
+# generates band code name list from band.py
+band_list_db = [band.generation_number for band in bands]
+
+asked_band = st.sidebar.multiselect(
+    "Choose band",
+    band_list_db,
+    ["B42", "n77", "B77D"],
 )
 
-list_of_band = str_to_list(asked_band)
-for band in list_of_band:
+for band in asked_band:
     band_range = band_to_freq(band)
     st.sidebar.write("".join(band_range))
+
+# Band code type in menu 
+# asked_band = st.sidebar.text_input(
+#     "type in band codes", value="B42, n77, B77D", placeholder="Input band code(s)"
+# )
+
+# list_of_band = str_to_list(asked_band)
+# for band in list_of_band:
+#     band_range = band_to_freq(band)
+#     st.sidebar.write("".join(band_range))
+
+#############################
+## Main Menu Begins##########
+#############################
 
 
 # Find Operators and Countries
