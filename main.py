@@ -4,10 +4,15 @@ import op
 import re
 import country
 
+#################################################
+## Reads 3 py files #############################
+
 bands = band.bands
 operators = op.operators
 countries = country.countries
 
+#################################################
+## Define functions #############################
 
 def freq_to_band(frequency_to_evaluate):
     try:
@@ -24,8 +29,7 @@ def freq_to_band(frequency_to_evaluate):
     print(matched_bands)
     return matched_bands
 
-
-## バンド名から周波数範囲記述のstrを発生させる、引数はバンド名のstr
+# バンド名から周波数範囲記述のstrを発生させる、引数はバンド名のstr
 def band_to_freq(band_to_evaluate):
     try:
         print(f"{band_to_evaluate} used:")
@@ -51,7 +55,6 @@ def band_to_freq(band_to_evaluate):
             matched_frequency.append(frequency_range)
     return matched_frequency
 
-
 ## バンドのリストからmainとsubの別々の周波数リストに返す
 ## n###と三桁まで許容、そしてサブバンドコードのアルファベットは含まないことを$で表している
 def main_sub_split(band_list):
@@ -65,18 +68,31 @@ def main_sub_split(band_list):
             sub_band.append(element)
     return main_band, sub_band
 
+# B##, n##の並べ替えの関数
+def sort_key(item):
+    if item.startswith('B'):
+        prefix, num = 'B', int(item[1:])
+    else:
+        prefix, num = 'n', int(item[1:])
+    return (prefix, num)
 
-## 複数のバンド名が入っている文字列をリストに変換する
-def str_to_list(string):
-    # カンマと前後のスペース複数の組み合わせ("\s*,\s*")か空白のみ("\s+")のいずれかをパターンとして指定、stripで両端の空白を除去
-    return re.split(r"\s*,\s*|\s+", string.strip())
+# Operatorのbandから重複のないsetを作りlistに変換
+band_set = set()
+for operator in operators:
+    for band in operator.bands:
+        band_set.add(band)
+    # {band_set.add(band) for band in operator.bands}     
+multi_select_list = list(band_set)
 
+#band リストの並べ替えを実行 関数 sort_keyを参照    
+multi_select_list = sorted(multi_select_list, key=sort_key)   
+print(multi_select_list)
 
+################################################
 #### Sidebar menu begins
 
 ## Frequency to band code conversion
-
-st.sidebar.header("Frquency ⇔ Band")
+st.sidebar.header("Frquency ↔ Band")
 
 asked_frequency = st.sidebar.number_input(
     "Frequency in MHz?", value=2150, placeholder="Input single frequency value"
@@ -102,7 +118,7 @@ st.sidebar.write(" ")
 band_list_db = [band.name for band in bands]
 
 asked_band = st.sidebar.multiselect(
-    "Choose band",
+    "Select band(s)",
     band_list_db,
     ["B42", "n77", "B77D"],
 )
@@ -111,15 +127,6 @@ for band in asked_band:
     band_range = band_to_freq(band)
     st.sidebar.write("".join(band_range))
 
-# Band code type in menu 
-# asked_band = st.sidebar.text_input(
-#     "type in band codes", value="B42, n77, B77D", placeholder="Input band code(s)"
-# )
-
-# list_of_band = str_to_list(asked_band)
-# for band in list_of_band:
-#     band_range = band_to_freq(band)
-#     st.sidebar.write("".join(band_range))
 
 #############################
 ## Main Menu Begins##########
@@ -130,42 +137,11 @@ for band in asked_band:
 st.title("Find Operators and Countries")
 
 # LTE Operator Finder
-st.header("LTE Operators")
-
+st.header("Band and Operators")
 asked_bands = st.multiselect(
-    "Which 4G/LTE band?",
-    [
-        "B1",
-        "B2",
-        "B3",
-        "B4",
-        "B5",
-        "B7",
-        "B8",
-        "B11",
-        "B12",
-        "B13",
-        "B14",  # 2024/3/14追加
-        "B17",
-        "B18",
-        "B19",
-        "B20",
-        "B21",
-        "B26",
-        "B28",
-        "B29",
-        "B30",
-        "B38",
-        "B39",
-        "B40",
-        "B41",
-        "B42",
-        "B46",
-        "B66",
-        "B71",
-        "B85",  # 2024/3/14追加
-    ],
-    ["B1", "B42"],
+    "Which LTE/5G band?",
+    multi_select_list,
+    ["B1", "n77", "n41"],
 )
 
 for band in asked_bands:
@@ -184,56 +160,15 @@ for band in asked_bands:
     )
     # st.write("")
     st.write(", ".join(operator_set))
-    # st.write("Their **headquarters** are located in:")
-    # st.write(", ".join(headquarter_set))
 
+st.write("")
 
-# 5G Operator Finder
-st.header("5G Operators")
-
-asked_bands = st.multiselect(
-    "Which 5G band?",
-    [
-        "n1",
-        "n2",
-        "n3",
-        "n5",
-        "n7",
-        "n8",
-        "n20",
-        "n28",
-        "n38",
-        "n40",
-        "n41",
-        "n46",
-        "n66",
-        "n71",
-        "n77",
-        "n78",
-        "n79",
-        "n257",
-        "n258",
-        "n260",
-        "n261",
-    ],
-    ["n38", "n77"],
-)
-
-for band in asked_bands:
-    operator_set = []
-    if elem.name == band:
-        dup_mode = ", ".join(elem.duplex)
-    for operator in operators:
-        if operator.has_bands(band):
-            operator_set.append(operator.name)
-            # headquarter_set.append(operator.headquarters)
+with st.expander("Main and sub band"):
     st.write(
-        f"**{band} band** is in **{dup_mode}** mode with **{len(operator_set)}** operators"
+        "The main LTE and 5G bands are denoted as B3, B42, and n77. In many cases, it is publicly available which operator uses which band. Sub-bands that are part of the main band are denoted as B42A or B78G. The relationship between sub-bands, operators, and regions is not published, so the 'Band and Operator' section does not have this information. However, you can find frequency and sub-band information in the side menu.",
     )
-    # st.write("")
-    st.write(", ".join(operator_set))
-    # st.write("Their **headquarters** are located in:")
-    # st.write(", ".join(headquarter_set))
+
+
 
 
 # Operator Profile
@@ -249,46 +184,12 @@ class Country:
 
 # Find Operator Information
 
-st.header("Operator Information")
+st.header("Operator Profile")
+operator_list = [operator.name for operator in operators]
 
 asked_operators = st.multiselect(
     "Which operator?",
-    [
-        "AT&T",
-        "America Movil",
-        "Axiata",
-        "BSNL Mobile",
-        "Bharti Airtel",
-        "CK Hutchison",
-        "China Broadcast",
-        "China Mobile",
-        "China Telecom",
-        "China Unicom",
-        "Deutsche Telekom",
-        "Emirates",
-        "Globe Telecom",
-        "KDDI",
-        "MTN",
-        "MTN Irancell",
-        "MegaFon",
-        "Mobile TeleSystems",
-        "NTT Docomo",
-        "Ooredoo",
-        "Orange",
-        "PLDT",
-        "PT Telekomunikasi",
-        "Reliance Jio",
-        "Softbank",
-        "T-Mobile",
-        "Telefonica",
-        "Telenor",
-        "VEON",
-        "Verizon",
-        "Viettel",
-        "Vodacom",
-        "Vodafone Group",
-        "Vodafone Idea",
-    ],
+    operator_list,
     ["Verizon", "Bharti Airtel"],
 )
 
@@ -313,156 +214,12 @@ for player in asked_operators:
 
 # Find Operators in Countries
 
-st.header("Country Information")
-
+st.header("Operators per Country")
+country_list = [country.name for country in countries]
 asked_countries = st.multiselect(
     "Which country?",
-    [
-        "Afghanistan",
-        "Albania",
-        "Algeria",
-        "Argentina",
-        "Armenia",
-        "Australia",
-        "Austria",
-        "Bangladesh",
-        "Belarus",
-        "Belgium",
-        "Benin",
-        "Bosnia and Herzegovina",
-        "Botswana",
-        "Brazil",
-        "Bulgaria",
-        "Burkina Faso",
-        "Burundi",
-        "Cambodia",
-        "Cameroon",
-        "Canada",
-        "Central African Republic",
-        "Chad",
-        "Chile",
-        "China",
-        "Columbia",
-        "Congo",
-        "Congo",
-        "Costa",
-        "Croatia",
-        "Cyprus",
-        "Czech Republic",
-        "Denmark",
-        "Dominican Republic",
-        "East Timor",
-        "Ecuador",
-        "Egypt",
-        "El Salvador",
-        "Equatorial Guinea",
-        "Eswatini",
-        "Ethiopia",
-        "Fiji",
-        "Finland",
-        "France",
-        "Gabon",
-        "Germany",
-        "Ghana",
-        "Greece",
-        "Guatemala",
-        "Guernsey",
-        "Guinea",
-        "Guinea Bissau",
-        "Haiti",
-        "Honduras",
-        "Hong Kong",
-        "Hungary",
-        "Iceland",
-        "India",
-        "Indonesia",
-        "Iran",
-        "Iran",
-        "Iraq",
-        "Ireland",
-        "Italy",
-        "Ivory Coast",
-        "Japan",
-        "Jersey",
-        "Jordan",
-        "Kazakhstan",
-        "Kenya",
-        "Kenya",
-        "Kuwait",
-        "Kyrgyzstan",
-        "Laos",
-        "Lesotho",
-        "Liberia",
-        "Liechtenstein",
-        "Luxemboug",
-        "Macau",
-        "Madagascar",
-        "Malawi",
-        "Malaysia",
-        "Maldive",
-        "Mali",
-        "Mauritania",
-        "Mexico",
-        "Moldova",
-        "Montenegro",
-        "Morocco",
-        "Mozambique",
-        "Myanmar",
-        "Nepal",
-        "Netherlands",
-        "New Zealand",
-        "Nicaragua",
-        "Niger",
-        "Nigeria",
-        "North Macedonia",
-        "Northan Cyprus",
-        "Norway",
-        "Oman",
-        "Pakistan",
-        "Panama",
-        "Paraguay",
-        "Peru",
-        "Philippines",
-        "Poland",
-        "Portugal",
-        "Puerto Rico",
-        "Qatar",
-        "Romania",
-        "Russia",
-        "Rwanda",
-        "Saudi Arabia",
-        "Senegal",
-        "Serbia",
-        "Seychelles",
-        "Slovakia",
-        "Slovenia",
-        "South Africa",
-        "South Sdan",
-        "Spain",
-        "Sri Lanka",
-        "Sudan",
-        "Sweden",
-        "Syria",
-        "Tanzania",
-        "Thailand",
-        "Togo",
-        "Tonga",
-        "Tunisia",
-        "Turkey",
-        "Uganda",
-        "Ukraine",
-        "United Arab Emirates",
-        "United Kingdom",
-        "United States",
-        "Uruguay",
-        "Uzbekistan",
-        "Venezuela",
-        "Vietnam",
-        "Virgin Islands",
-        "Yemen",
-        "Zambia",
-    ],
-    ["United States", "Brazil"],
+    country_list,
+    ["United States", "India", "Japan"],
 )
 
 for q_country in asked_countries:
