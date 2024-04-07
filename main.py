@@ -136,7 +136,7 @@ for band in asked_band:
 # Find Operators and Countries
 st.title("Find Operators and Countries")
 
-# LTE Operator Finder
+# Band and Operators Finder
 st.header("Band and Operators")
 asked_bands = st.multiselect(
     "Which LTE/5G band?",
@@ -168,20 +168,6 @@ with st.expander("Main and sub band"):
         "The main LTE and 5G bands are denoted as B3, B42, and n77. In many cases, it is publicly available which operator uses which band. Sub-bands that are part of the main band are denoted as B42A or B78G. The relationship between sub-bands, operators, and regions is not published, so the 'Band and Operator' section does not have this information. However, you can find frequency and sub-band information in the side menu.",
     )
 
-
-
-
-# Operator Profile
-class Country:
-    def __init__(self, name, *operators):
-        self.name = name
-        self.operators = operators
-
-    def has_operators(self, player):
-        # print("in loop")
-        return player in self.operators
-
-
 # Find Operator Information
 
 st.header("Operator Profile")
@@ -212,7 +198,7 @@ for player in asked_operators:
             st.write(", ".join(country_set))
 
 
-# Find Operators in Countries
+# Find Operators per Country
 
 st.header("Operators per Country")
 country_list = [country.name for country in countries]
