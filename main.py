@@ -14,6 +14,7 @@ countries = country.countries
 #################################################
 ## Define functions #############################
 
+
 def freq_to_band(frequency_to_evaluate):
     try:
         int(frequency_to_evaluate)
@@ -28,6 +29,7 @@ def freq_to_band(frequency_to_evaluate):
             matched_bands.append(band.name)
     print(matched_bands)
     return matched_bands
+
 
 # バンド名から周波数範囲記述のstrを発生させる、引数はバンド名のstr
 def band_to_freq(band_to_evaluate):
@@ -55,6 +57,7 @@ def band_to_freq(band_to_evaluate):
             matched_frequency.append(frequency_range)
     return matched_frequency
 
+
 ## バンドのリストからmainとsubの別々の周波数リストに返す
 ## n###と三桁まで許容、そしてサブバンドコードのアルファベットは含まないことを$で表している
 def main_sub_split(band_list):
@@ -68,28 +71,31 @@ def main_sub_split(band_list):
             sub_band.append(element)
     return main_band, sub_band
 
+
 # B##, n##の並べ替えの関数
 def sort_key(item):
-    if item.startswith('B'):
-        prefix, num = 'B', int(item[1:])
+    if item.startswith("B"):
+        prefix, num = "B", int(item[1:])
     else:
-        prefix, num = 'n', int(item[1:])
+        prefix, num = "n", int(item[1:])
     return (prefix, num)
+
 
 # Operatorのbandから重複のないsetを作りlistに変換
 band_set = set()
 for operator in operators:
     for band in operator.bands:
         band_set.add(band)
-    # {band_set.add(band) for band in operator.bands}     
+    # {band_set.add(band) for band in operator.bands}
 multi_select_list = list(band_set)
 
-#band リストの並べ替えを実行 関数 sort_keyを参照    
-multi_select_list = sorted(multi_select_list, key=sort_key)   
+# band リストの並べ替えを実行 関数 sort_keyを参照
+multi_select_list = sorted(multi_select_list, key=sort_key)
 print(multi_select_list)
 
 ################################################
 #### Sidebar menu begins
+################################################
 
 ## Frequency to band code conversion
 st.sidebar.header("Frquency ↔ Band")
@@ -127,6 +133,11 @@ for band in asked_band:
     band_range = band_to_freq(band)
     st.sidebar.write("".join(band_range))
 
+with st.sidebar.expander("Cautions"):
+    st.write(
+        "The left Side Menu lists the most commonly used bands among the published frequencies. The right main menu, deals with the bands reported by the operator or the third party, so they are not the same. The sub-band is not dealt with in the main menu either, as its relationship with the operator is unknown.",
+    )
+
 
 #############################
 ## Main Menu Begins##########
@@ -163,9 +174,11 @@ for band in asked_bands:
 
 st.write("")
 
-with st.expander("Main and sub band"):
+# Note
+
+with st.expander("Can not find your band?"):
     st.write(
-        "The main LTE and 5G bands are denoted as B3, B42, and n77. In many cases, it is publicly available which operator uses which band. Sub-bands that are part of the main band are denoted as B42A or B78G. The relationship between sub-bands, operators, and regions is not published, so the 'Band and Operator' section does not have this information. However, you can find frequency and sub-band information in the side menu.",
+        "If an operator is trying to convert from LTE to 5G, it may be found with a B number but not with an n number. Sub-bands that are part of the main band are referred to as B42A or B78G. The relationship between sub-bands, operators and regions is not publicly available and not included in the 'Band and Operator' section.",
     )
 
 # Find Operator Information
@@ -218,7 +231,7 @@ for q_country in asked_countries:
 
 st.write("")
 st.write("")
-with st.expander("About this app"):
+with st.expander("Source and coverage"):
     st.write(
         "This app is a compilation of public domain web information on the top 30 mobile operators. They represent 85\% of all subscribers, but 15\% are not captured. Here are the main reference web links",
         "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
