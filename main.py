@@ -1,4 +1,5 @@
 import streamlit as st
+from functools import reduce
 import band
 import op
 import re
@@ -6,6 +7,7 @@ import country
 
 #################################################
 ## Reads 3 py files #############################
+#################################################
 
 bands = band.bands
 operators = op.operators
@@ -13,6 +15,7 @@ countries = country.countries
 
 #################################################
 ## Define functions #############################
+#################################################
 
 
 def freq_to_band(frequency_to_evaluate):
@@ -81,20 +84,32 @@ def sort_key(item):
     return (prefix, num)
 
 
+# listの要素をつなげたstrにするときに、A, B, and Cという形にする
+def join_strings(str_list):
+    length = len(str_list)
+    if length == 2:
+        return " and ".join(str_list)
+    elif length > 2:
+        return ", ".join(str_list[:-1]) + ", and " + str_list[-1]
+    else:
+        return "".join(str_list)
+
+
 # Operatorのbandから重複のないsetを作りlistに変換
 band_set = set()
 for operator in operators:
     for band in operator.bands:
         band_set.add(band)
-    # {band_set.add(band) for band in operator.bands}
 multi_select_list = list(band_set)
 
 # band リストの並べ替えを実行 関数 sort_keyを参照
 multi_select_list = sorted(multi_select_list, key=sort_key)
-print(multi_select_list)
+# print(multi_select_list)
 
 ################################################
+################################################
 #### Sidebar menu begins
+################################################
 ################################################
 
 ## Frequency to band code conversion
@@ -109,10 +124,10 @@ main_band, sub_band = main_sub_split(band_list)
 
 if main_band:
     st.sidebar.write("**Main bands**")
-    st.sidebar.write(" , ".join(main_band))
+    st.sidebar.write(join_strings(main_band))
     if sub_band:
         st.sidebar.write("**Sub bands**")
-        st.sidebar.write(" , ".join(sub_band))
+        st.sidebar.write(join_strings(sub_band))
 else:
     st.sidebar.write("Not found")
 
@@ -131,16 +146,17 @@ asked_band = st.sidebar.multiselect(
 
 for band in asked_band:
     band_range = band_to_freq(band)
-    st.sidebar.write("".join(band_range))
+    st.sidebar.write(join_strings(band_range))
 
 with st.sidebar.expander("Cautions"):
     st.write(
-        "The left Side Menu lists the most commonly used bands among the published frequencies. The right main menu, deals with the bands reported by the operator or the third party, so they are not the same. The sub-band is not dealt with in the main menu either, as its relationship with the operator is unknown.",
+        "The left side menu lists the most commonly used bands . The right main menu, deals with the bands reported by the operator or the third party, so they are not the same. The sub-band is not dealt with in the main menu either, as its relationship with the operator is unknown.",
     )
 
-
+#############################
 #############################
 ## Main Menu Begins##########
+#############################
 #############################
 
 
@@ -155,30 +171,48 @@ asked_bands = st.multiselect(
     ["B1", "n77", "n41"],
 )
 
+# Iteration for each input band begins
+# list_operator should store operators set for each band
+list_operators = []
+
 for band in asked_bands:
-    operator_set = []
+    operator_set = set()
 
     for elem in bands:
         if elem.name == band:
             dup_mode = ", ".join(elem.duplex)
     for operator in operators:
         if operator.has_bands(band):
-            operator_set.append(operator.name)
-            # headquarter_set.append(operator.headquarters)
+            operator_set.add(operator.name)
+    # This list should be like [{},{},{},.....]
+    list_operators.append(operator_set)
 
     st.write(
         f"**{band} band** is in **{dup_mode}** mode with **{len(operator_set)}** operators"
     )
     # st.write("")
-    st.write(", ".join(operator_set))
+    st.write(join_strings(list(operator_set)))
 
-st.write("")
+# 共通のオペレータを求める、reduceで再帰的にlist_operatorからAND(intersect)を取っている
+intersection = reduce(lambda a, b: a.intersection(b), list_operators)
+
+# inputのバンド数が2以上の場合、つまり共通operatorを議論できる場合は表示、さもなければ非表示
+if len(asked_bands) > 1:
+    if intersection:
+        st.write(
+            f"**{join_strings(asked_bands)}** have **{len(intersection)}** common operator(s):"
+        )
+        st.write(join_strings(list(intersection)))
+    else:
+        st.write(f"**No common operator** found in **{join_strings(asked_bands)}**")
+
+    st.write("")
 
 # Note
 
 with st.expander("Can not find your band?"):
     st.write(
-        "If an operator is trying to convert from LTE to 5G, it may be found with a B number but not with an n number. Sub-bands that are part of the main band are referred to as B42A or B78G. The relationship between sub-bands, operators and regions is not publicly available and not included in the 'Band and Operator' section.",
+        "If an operator is trying to migrate from LTE to 5G, they may be found with a B number but not an n number. Sub-bands that are part of the main band are called B42A or B78G, the relationship between operators and regions is not publicly available and is not included in this section.",
     )
 
 # Find Operator Information
@@ -207,8 +241,8 @@ for player in asked_operators:
             st.write(
                 f"**{player}** uses {len(operator.bands)} bands in **{len(country_set)}** countries with a total of **{operator.subscribers}** million subscribers, headquartered in **{operator.headquarters}**"
             )
-            st.write(", ".join(operator.bands))
-            st.write(", ".join(country_set))
+            st.write(join_strings(operator.bands))
+            st.write(join_strings(country_set))
 
 
 # Find Operators per Country
@@ -226,8 +260,8 @@ for q_country in asked_countries:
     for country in countries:
         if country.name == q_country:
             operator_set = country.operators
-    st.write(f"**{q_country}** has {len(operator_set)} operators:")
-    st.write(", ".join(operator_set))
+    st.write(f"**{q_country}** has {len(operator_set)} operator(s):")
+    st.write(join_strings(operator_set))
 
 st.write("")
 st.write("")
