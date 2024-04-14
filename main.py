@@ -64,11 +64,11 @@ def band_to_freq(band_to_evaluate):
 ## バンドのリストからmainとsubの別々の周波数リストに返す
 ## n###と三桁まで許容、そしてサブバンドコードのアルファベットは含まないことを$で表している
 def main_sub_split(band_list):
-    pattern = r"B\d{1,2}$|n\d{1,3}"  # B##, n##
+    # pattern = r"B\d{1,2}$|n\d{1,3}"  # B##, n##
     main_band = []
     sub_band = []
     for element in band_list:
-        if re.match(pattern, element):
+        if re.match((pattern:= r"B\d{1,2}$|n\d{1,3}"), element):
             main_band.append(element)
         else:
             sub_band.append(element)
@@ -124,10 +124,10 @@ main_band, sub_band = main_sub_split(band_list)
 
 if main_band:
     st.sidebar.write("**Main bands**")
-    st.sidebar.write(join_strings(main_band))
+    st.sidebar.markdown(f"- {join_strings(main_band)}")
     if sub_band:
         st.sidebar.write("**Sub bands**")
-        st.sidebar.write(join_strings(sub_band))
+        st.sidebar.write(f"- {join_strings(sub_band)}")
 else:
     st.sidebar.write("Not found")
 
@@ -146,12 +146,11 @@ asked_band = st.sidebar.multiselect(
 
 for band in asked_band:
     band_range = band_to_freq(band)
-    st.sidebar.write(join_strings(band_range))
+    st.sidebar.markdown(f'- {join_strings(band_range)}')
 
-with st.sidebar.expander("Cautions"):
+with st.sidebar.expander("Main and sub bands"):
     st.write(
-        "The left side menu lists the most commonly used bands . The right main menu, deals with the bands reported by the operator or the third party, so they are not the same. The sub-band is not dealt with in the main menu either, as its relationship with the operator is unknown.",
-    )
+        "LTE/4G bands start with 'B' and 5G with 'n' and are called main bands. One of the mobile base station OEMs uses sub-bands such as 'B42C' to describe the partial coverage of the main band. The left side menu covers both main and sub-bands. The right main menu covers the main bands only, as the sub-bands and operator/country information are not publicly known, although the sub-bands appear to have been used for applications in different countries for some time." )
 
 #############################
 #############################
@@ -191,7 +190,7 @@ for band in asked_bands:
         f"**{band} band** is in **{dup_mode}** mode with **{len(operator_set)}** operators"
     )
     # st.write("")
-    st.write(join_strings(list(operator_set)))
+    st.markdown(f"- {join_strings(list(operator_set))}")
 
 # 共通のオペレータを求める、reduceで再帰的にlist_operatorからAND(intersect)を取っている
 intersection = reduce(lambda a, b: a.intersection(b), list_operators)
@@ -200,9 +199,9 @@ intersection = reduce(lambda a, b: a.intersection(b), list_operators)
 if len(asked_bands) > 1:
     if intersection:
         st.write(
-            f"**{join_strings(asked_bands)}** have **{len(intersection)}** common operator(s):"
+            f"**{join_strings(asked_bands)}** are used by **{len(intersection)}** operators in common"
         )
-        st.write(join_strings(list(intersection)))
+        st.markdown(f'- {join_strings(list(intersection))}')
     else:
         st.write(f"**No common operator** found in **{join_strings(asked_bands)}**")
 
@@ -233,16 +232,14 @@ for player in asked_operators:
         # print("Player=", player)
         if country.has_operators(player):
             country_set.append(country.name)
-    # st.write(
-    #     f"**{player}** headquarter is in is serviced in {len(country_set)} countries:"
-    # )
+
     for operator in operators:
         if operator.name == player:
             st.write(
                 f"**{player}** uses {len(operator.bands)} bands in **{len(country_set)}** countries with a total of **{operator.subscribers}** million subscribers, headquartered in **{operator.headquarters}**"
             )
-            st.write(join_strings(operator.bands))
-            st.write(join_strings(country_set))
+            st.markdown(f'- {join_strings(operator.bands)}')
+            st.markdown(f'- {join_strings(country_set)}')
 
 
 # Find Operators per Country
@@ -261,7 +258,7 @@ for q_country in asked_countries:
         if country.name == q_country:
             operator_set = country.operators
     st.write(f"**{q_country}** has {len(operator_set)} operator(s):")
-    st.write(join_strings(operator_set))
+    st.markdown(f'- {join_strings(operator_set)}')
 
 st.write("")
 st.write("")
