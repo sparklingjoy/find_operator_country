@@ -68,7 +68,7 @@ def main_sub_split(band_list):
     main_band = []
     sub_band = []
     for element in band_list:
-        if re.match((pattern:= r"B\d{1,2}$|n\d{1,3}"), element):
+        if re.match((pattern := r"B\d{1,2}$|n\d{1,3}"), element):
             main_band.append(element)
         else:
             sub_band.append(element)
@@ -146,11 +146,12 @@ asked_band = st.sidebar.multiselect(
 
 for band in asked_band:
     band_range = band_to_freq(band)
-    st.sidebar.markdown(f'- {join_strings(band_range)}')
+    st.sidebar.markdown(f"- {join_strings(band_range)}")
 
 with st.sidebar.expander("Main and sub bands"):
     st.write(
-        "LTE/4G bands start with 'B' and 5G with 'n' and are called main bands. One of the mobile base station OEMs uses sub-bands such as 'B42C' to describe the partial coverage of the main band. The left side menu covers both main and sub-bands. The right main menu covers the main bands only, as the sub-bands and operator/country information are not publicly known, although the sub-bands appear to have been used for applications in different countries for some time." )
+        "LTE/4G bands start with 'B' and 5G with 'n' and are called main bands. One of the mobile base station OEMs uses sub-bands such as 'B42C' to describe the partial coverage of the main band. The left side menu covers both main and sub-bands. The right main menu covers the main bands only, as the sub-bands and operator/country information are not publicly known, although the sub-bands appear to have been used for applications in different countries for some time."
+    )
 
 #############################
 #############################
@@ -201,7 +202,7 @@ if len(asked_bands) > 1:
         st.write(
             f"**{join_strings(asked_bands)}** are used by **{len(intersection)}** operators in common"
         )
-        st.markdown(f'- {join_strings(list(intersection))}')
+        st.markdown(f"- {join_strings(list(intersection))}")
     else:
         st.write(f"**No common operator** found in **{join_strings(asked_bands)}**")
 
@@ -217,7 +218,7 @@ with st.expander("Can not find your band?"):
 # Find Operator Information
 
 st.header("Operator Profile")
-operator_list = [operator.name for operator in operators]
+operator_list = sorted([operator.name for operator in operators])
 
 asked_operators = st.multiselect(
     "Which operator?",
@@ -238,14 +239,14 @@ for player in asked_operators:
             st.write(
                 f"**{player}** uses {len(operator.bands)} bands in **{len(country_set)}** countries with a total of **{operator.subscribers}** million subscribers, headquartered in **{operator.headquarters}**"
             )
-            st.markdown(f'- {join_strings(operator.bands)}')
-            st.markdown(f'- {join_strings(country_set)}')
+            st.markdown(f"- {join_strings(operator.bands)}")
+            st.markdown(f"- {join_strings(country_set)}")
 
 
 # Find Operators per Country
 
 st.header("Operators per Country")
-country_list = [country.name for country in countries]
+country_list = sorted([country.name for country in countries])
 asked_countries = st.multiselect(
     "Which country?",
     country_list,
@@ -258,7 +259,7 @@ for q_country in asked_countries:
         if country.name == q_country:
             operator_set = country.operators
     st.write(f"**{q_country}** has {len(operator_set)} operator(s):")
-    st.markdown(f'- {join_strings(operator_set)}')
+    st.markdown(f"- {join_strings(operator_set)}")
 
 st.write("")
 st.write("")
