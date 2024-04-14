@@ -177,8 +177,8 @@ countries = [
     # MTN Irancell
     Country("Iran", "MTN Irancell"),
     # Mobile TeleSystems Russia
-    Country("Russia", "Mobile Telesystems", "Megafon"),
-    Country("Armenia", "Mobile Telesystems"),
+    Country("Russia", "Mobile TeleSystems", "Megafon"),
+    Country("Armenia", "Mobile TeleSystems"),
     # Globe Telecom Philippines
     Country("Philippines", "Globe Telecom", "PLDT"),
 ]
