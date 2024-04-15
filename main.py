@@ -64,11 +64,12 @@ def band_to_freq(band_to_evaluate):
 ## バンドのリストからmainとsubの別々の周波数リストに返す
 ## n###と三桁まで許容、そしてサブバンドコードのアルファベットは含まないことを$で表している
 def main_sub_split(band_list):
-    # pattern = r"B\d{1,2}$|n\d{1,3}"  # B##, n##
     main_band = []
     sub_band = []
     for element in band_list:
-        if re.match((pattern := r"B\d{1,2}$|n\d{1,3}"), element):
+        if re.match(
+            (pattern := r"B\d{1,2}$|n\d{1,3}"), element
+        ):  # := Walrus operator...
             main_band.append(element)
         else:
             sub_band.append(element)
@@ -127,7 +128,7 @@ if main_band:
     st.sidebar.markdown(f"- {join_strings(main_band)}")
     if sub_band:
         st.sidebar.write("**Sub bands**")
-        st.sidebar.write(f"- {join_strings(sub_band)}")
+        st.sidebar.write(f" - {join_strings(sub_band)}")
 else:
     st.sidebar.write("Not found")
 
@@ -194,7 +195,9 @@ for band in asked_bands:
     st.markdown(f"- {join_strings(list(operator_set))}")
 
 # 共通のオペレータを求める、reduceで再帰的にlist_operatorからAND(intersect)を取っている
-intersection = reduce(lambda a, b: a.intersection(b), list_operators)
+# list_operator =[]の状態で intersectionを行うとエラーを起こしたので ifを追加している
+if list_operators:
+    intersection = reduce(lambda a, b: a.intersection(b), list_operators)
 
 # inputのバンド数が2以上の場合、つまり共通operatorを議論できる場合は表示、さもなければ非表示
 if len(asked_bands) > 1:
