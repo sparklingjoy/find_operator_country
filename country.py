@@ -18,7 +18,7 @@ countries = [
     Country(
         "China", "China Mobile", "China Telecom", "China Unicom", "China Broadcast"
     ),
-    Country("Hong Kong", "CK Huchinson", "China Mobile", "China Unicom"),
+    Country("Hong Kong", "CK Hutchison", "China Mobile", "China Unicom"),
     Country("India", "Bharti Airtel", "Reliance Jio", "Vodafone Idea", "BSNL Mobile"),
     Country("Pakistan", "China Mobile", "Telenor", "Emirates", "VEON"),
     Country("Macau", "China Telecom", "CK Huchinson"),

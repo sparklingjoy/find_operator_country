@@ -187,9 +187,9 @@ for band in asked_bands:
             operator_set.add(operator.name)
     # This list should be like [{},{},{},.....]
     list_operators.append(operator_set)
-
+    band_range = band_to_freq(band)
     st.write(
-        f"**{band} band** is in **{dup_mode}** mode with **{len(operator_set)}** operators"
+        f"**{join_strings(band_range)}** is in **{dup_mode}** mode and used by following **{len(operator_set)}** operators"
     )
     # st.write("")
     st.markdown(f"- {join_strings(list(operator_set))}")
@@ -244,6 +244,8 @@ for player in asked_operators:
             )
             st.markdown(f"- {join_strings(operator.bands)}")
             st.markdown(f"- {join_strings(country_set)}")
+            if operator.oran_status == "member_active":
+                st.markdown(f"- {player} is active on O-RAN")
 
 
 # Find Operators per Country

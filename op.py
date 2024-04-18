@@ -1,8 +1,9 @@
 # Operator のクラス定義
 class Operator:
-    def __init__(self, name, headquarters, subscribers, *bands):
+    def __init__(self, name, headquarters, oran_status, subscribers, *bands):
         self.name = name
         self.headquarters = headquarters
+        self.oran_status = oran_status  # non_member, member_inactive, member_active
         self.subscribers = subscribers
         self.bands = bands
 
@@ -13,11 +14,22 @@ class Operator:
 # オペレーターのインスタンスを作成
 operators = [
     Operator(
-        "China Mobile", "China", 986, "B1", "B38", "B39", "B40", "B41", "n78", "n79"
+        "China Mobile",
+        "China",
+        "member_inactive",
+        986,
+        "B1",
+        "B38",
+        "B39",
+        "B40",
+        "B41",
+        "n78",
+        "n79",
     ),
     Operator(
         "Bharti Airtel",
         "India",
+        "member_active",
         497,
         "B3",
         "B5",
@@ -28,12 +40,37 @@ operators = [
         "n78",
         "n258",
     ),
-    Operator("Reliance Jio", "India", 436, "B3", "B5", "B40", "n28", "n78", "n258"),
-    Operator("China Telecom", "China", 391, "B1", "B3", "B40", "B41", "n78", "n38"),
-    Operator("China Unicom", "China", 928, "B1", "B3", "B41", "n78", "n41"),
+    Operator(
+        "Reliance Jio",
+        "India",
+        "member_active",
+        436,
+        "B3",
+        "B5",
+        "B40",
+        "n28",
+        "n78",
+        "n258",
+    ),
+    Operator(
+        "China Telecom",
+        "China",
+        "member_inactive",
+        391,
+        "B1",
+        "B3",
+        "B40",
+        "B41",
+        "n78",
+        "n38",
+    ),
+    Operator(
+        "China Unicom", "China", "member_inactive", 928, "B1", "B3", "B41", "n78", "n41"
+    ),
     Operator(
         "China Broadcast",
         "China",
+        "member_inactive",
         105,
         "B28",
         "n28",
@@ -43,6 +80,7 @@ operators = [
     Operator(
         "America Movil",
         "Mexico",
+        "non_member",
         308,
         "B2",
         "B4",
@@ -55,11 +93,16 @@ operators = [
         "n66",
         "n78",
     ),
-    Operator("MTN", "South Africa", 289, "B1", "B3", "B40", "n78", "n1", "n3"),
-    Operator("Vodafone Group", "UK", 286, "B1", "B7", "B20", "n28", "n42"),
+    Operator(
+        "MTN", "South Africa", "non_member", 289, "B1", "B3", "B40", "n78", "n1", "n3"
+    ),
+    Operator(
+        "Vodafone Group", "UK", "member_active", 286, "B1", "B7", "B20", "n28", "n42"
+    ),
     Operator(
         "Telefonica",
         "Spain",
+        "member_active",
         278,
         "B3",
         "B7",
@@ -76,13 +119,24 @@ operators = [
         "n257",
         "n258",
     ),
-    Operator("Orange", "France", 249, "B1", "B3", "B7", "B20", "B28"),
+    Operator("Orange", "France", "member_active", 249, "B1", "B3", "B7", "B20", "B28"),
     Operator(
-        "Vodafone Idea", "India", 231, "B3", "B8", "B1", "B40", "B41", "n78", "n258"
+        "Vodafone Idea",
+        "India",
+        "non_member",
+        231,
+        "B3",
+        "B8",
+        "B1",
+        "B40",
+        "B41",
+        "n78",
+        "n258",
     ),  # https://www.lightreading.com/open-ran/vodafone-idea-launches-open-ran-pilot-in-india-with-mavenir 2024/3/14 added
     Operator(
         "AT&T",
         "United States",
+        "member_active",
         217,
         "B2",
         "B4",
@@ -99,10 +153,22 @@ operators = [
         "n260",
         "n261",
     ),  # 確度高い AT&T web+　Wilson amp情報
-    Operator("Deutsche Telekom", "Germany", 212, "B1", "B3", "B7", "B20", "B28", "n28"),
+    Operator(
+        "Deutsche Telekom",
+        "Germany",
+        "member_active",
+        212,
+        "B1",
+        "B3",
+        "B7",
+        "B20",
+        "B28",
+        "n28",
+    ),
     Operator(
         "PT Telekomunikasi",
         "Indonesia",
+        "non_member",
         176,
         "B3",
         "B5",
@@ -113,13 +179,16 @@ operators = [
         "n3",
         "n40",
     ),
-    Operator("Telenor", "Norway", 172, "B7", "B20"),
-    Operator("Axiata", "Malaysia", 163, "B1", "B3", "B7", "B40", "B41"),
-    Operator("Emirates", "UAE", 159, "B3", "B7", "B20", "B42", "n78"),
-    Operator("VEON", "Netherlands", 157, "B1", "B3", "B7", "B20", "B28", "n28"),
+    Operator("Telenor", "Norway", "non_member", 172, "B7", "B20"),
+    Operator("Axiata", "Malaysia", "non_member", 163, "B1", "B3", "B7", "B40", "B41"),
+    Operator("Emirates", "UAE", "non_member", 159, "B3", "B7", "B20", "B42", "n78"),
+    Operator(
+        "VEON", "Netherlands", "non_member", 157, "B1", "B3", "B7", "B20", "B28", "n28"
+    ),
     Operator(
         "Verizon",
         "United States",
+        "member_active",
         143,
         "B13",
         "B2",
@@ -131,13 +200,14 @@ operators = [
         "n77",
         "n260",
         "n261",
-    ),  # duplicated n77 was removed
-    Operator("Vodacom", "South Africa", 133, "B8", "B3", "B42"),
-    Operator("Ooredoo", "Qatar", 121, "B3", "B8", "B1"),
+    ),  # duplicated n77 was removed 2024/3/25
+    Operator("Vodacom", "South Africa", "non_member", 133, "B8", "B3", "B42"),
+    Operator("Ooredoo", "Qatar", "non_member", 121, "B3", "B8", "B1"),
     # T-Mobile may be part of Deutche Telecom, but left as it is
     Operator(
         "T-Mobile",
         "United States",
+        "member_active",
         121,
         "B2",
         "B12",
@@ -151,16 +221,30 @@ operators = [
         "n260",
         "n261",
     ),
-    Operator("Viettel", "Vietnam", 110, "B1", "B3", "B7", "n78", "n257", "n258"),
-    Operator("BSNL Mobile", "India", 106, "B3", "B8", "B41"),
-    Operator("CK Hutchison", "Hong Kong", 100, "B1", "B8", "B3", "B7", "B40"),
-    Operator("MTN Irancell", "Iran", 92, "B1", "B8", "B3", "B7", "B42"),
     Operator(
-        "Mobile TeleSystems", "Russia", 84, "B3", "B7", "B20", "B38", "B40", "B46"
+        "Viettel", "Vietnam", "non_member", 110, "B1", "B3", "B7", "n78", "n257", "n258"
+    ),
+    Operator("BSNL Mobile", "India", "non_member", 106, "B3", "B8", "B41"),
+    Operator(
+        "CK Hutchison", "Hong Kong", "non_member", 100, "B1", "B8", "B3", "B7", "B40"
+    ),
+    Operator("MTN Irancell", "Iran", "non_member", 92, "B1", "B8", "B3", "B7", "B42"),
+    Operator(
+        "Mobile TeleSystems",
+        "Russia",
+        "non_member",
+        84,
+        "B3",
+        "B7",
+        "B20",
+        "B38",
+        "B40",
+        "B46",
     ),
     Operator(
         "NTT Docomo",
         "Japan",
+        "member_active",
         83,
         "B28",
         "B18",
@@ -179,12 +263,13 @@ operators = [
         "n79",
         "n257",
     ),
-    Operator("Globe Telecom", "Philippines", 54, "B28", "B40", "B41"),
-    Operator("PLDT", "Philippines", 53, "B5", "B28", "B41"),
-    Operator("MegaFon", "Russia", 71, "B3", "B7", "B20", "B38"),
+    Operator("Globe Telecom", "Philippines", "non_member", 54, "B28", "B40", "B41"),
+    Operator("PLDT", "Philippines", "non_member", 53, "B5", "B28", "B41"),
+    Operator("MegaFon", "Russia", "non_member", 71, "B3", "B7", "B20", "B38"),
     Operator(
         "KDDI",
         "Japan",
+        "member_active",
         66,
         "B28",
         "B18",
@@ -206,6 +291,7 @@ operators = [
     Operator(
         "Softbank",
         "Japan",
+        "member_active",
         54,
         "B12",
         "B28",
