@@ -97,7 +97,7 @@ operators = [
         "MTN", "South Africa", "non_member", 289, "B1", "B3", "B40", "n78", "n1", "n3"
     ),
     Operator(
-        "Vodafone Group", "UK", "member_active", 286, "B1", "B7", "B20", "n28", "n42"
+        "Vodafone Group", "UK", "member_active", 286, "B1", "B3", "B7", "B8", "B20", "B32", "B38", "n78"
     ),
     Operator(
         "Telefonica",

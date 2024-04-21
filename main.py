@@ -1,6 +1,5 @@
 import streamlit as st
 from functools import reduce
-import random
 import band
 import op
 import re
@@ -139,12 +138,11 @@ st.sidebar.write(" ")
 ## Band code to frequency conversion with multiselect menu
 # generates band code name list from band.py
 band_list_db = [band.name for band in bands]
-# suggested band list, selects 1~4 items from band list database
-band_suggest = random.sample(band_list_db, random.randint(1,4))
+
 asked_band = st.sidebar.multiselect(
     "Select band(s)",
     band_list_db,
-    band_suggest,
+    ["B42", "n77", "B77D"],
 )
 
 for band in asked_band:
@@ -168,12 +166,10 @@ st.title("Find Operators and Countries")
 
 # Band and Operators Finder
 st.header("Band and Operators")
-# suggested band list, selects 2~4 items from select list 
-band_suggest = random.sample(multi_select_list, random.randint(2,4))
 asked_bands = st.multiselect(
     "Which LTE/5G band?",
     multi_select_list,
-    band_suggest,
+    ["B1", "n77", "n41"],
 )
 
 # Iteration for each input band begins
@@ -226,12 +222,11 @@ with st.expander("Can not find your band?"):
 
 st.header("Operator Profile")
 operator_list = sorted([operator.name for operator in operators])
-# suggested operator list, selects 2~6 items from select list 
-operator_suggest = random.sample(operator_list, random.randint(2,6))
+
 asked_operators = st.multiselect(
     "Which operator?",
     operator_list,
-    operator_suggest,
+    ["Verizon", "Bharti Airtel"],
 )
 
 for player in asked_operators:
@@ -257,13 +252,10 @@ for player in asked_operators:
 
 st.header("Operators per Country")
 country_list = sorted([country.name for country in countries])
-
-# suggested country list, selects 2~6 items from select list 
-country_suggest = random.sample(country_list, random.randint(2,6))
 asked_countries = st.multiselect(
     "Which country?",
     country_list,
-    country_suggest,
+    ["United States", "India", "Japan"],
 )
 
 for q_country in asked_countries:
