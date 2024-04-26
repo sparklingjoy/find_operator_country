@@ -162,7 +162,7 @@ with st.sidebar.expander("Main and sub bands"):
 
 
 # Find Operators and Countries
-st.title("Find Operators and Countries")
+st.title("ind Operators and Countries")
 
 # Band and Operators Finder
 st.header("Band and Operators")
