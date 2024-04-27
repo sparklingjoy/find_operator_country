@@ -123,7 +123,7 @@ operators = [
     Operator(
         "Vodafone Idea",
         "India",
-        "non_member",
+        "member_active",
         231,
         "B3",
         "B8",
