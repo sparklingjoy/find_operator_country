@@ -105,7 +105,7 @@ multi_select_list = list(band_set)
 
 # band リストの並べ替えを実行 関数 sort_keyを参照
 multi_select_list = sorted(multi_select_list, key=sort_key)
-# print(multi_select_list)
+
 
 ################################################
 ################################################
@@ -229,11 +229,15 @@ asked_operators = st.multiselect(
     ["Verizon", "Bharti Airtel"],
 )
 
+# Iteration for each operator begins
+# list_bands should store bands set for each operator
+list_bands = []
+
 for player in asked_operators:
     country_set = []
+    band_set = set()
 
     for country in countries:
-        # print("Player=", player)
         if country.has_operators(player):
             country_set.append(country.name)
 
@@ -242,11 +246,31 @@ for player in asked_operators:
             st.write(
                 f"**{player}** uses {len(operator.bands)} bands in **{len(country_set)}** countries with a total of **{operator.subscribers}** million subscribers, headquartered in **{operator.headquarters}**"
             )
-            st.markdown(f"- {join_strings(operator.bands)}")
+            sorted_bands = sorted(operator.bands, key=sort_key)
+            st.markdown(f"- {join_strings(sorted_bands)}")
             st.markdown(f"- {join_strings(country_set)}")
             if operator.oran_status == "member_active":
                 st.markdown(f"- {player} is active on O-RAN")
+            # This list should be like [{},{},{},.....]
+            band_set = set(operator.bands)
+            list_bands.append(band_set)     
 
+# 共通のバンドを求める、reduceで再帰的にlist_operatorからAND(intersect)を取っている
+if list_bands:
+    intersection = reduce(lambda a, b: a.intersection(b), list_bands)
+
+# inputのOperator数が2以上の場合、つまり共通bandを議論できる場合は表示、さもなければ非表示
+if len(asked_operators) > 1:
+    if intersection:
+        st.write(
+            f"**{join_strings(asked_operators)}** use **{len(intersection)}** band(s) in common"
+        )
+        sorted_bands = sorted(list(intersection), key=sort_key)
+        st.markdown(f"- {join_strings(sorted_bands)}")
+    else:
+        st.write(f"**No common band** found between **{join_strings(asked_operators)}**")
+
+    st.write("")
 
 # Find Operators per Country
 
