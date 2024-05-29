@@ -181,4 +181,10 @@ countries = [
     Country("Armenia", "Mobile TeleSystems"),
     # Globe Telecom Philippines
     Country("Philippines", "Globe Telecom", "PLDT"),
+    # Korea
+    Country("Korea", "SK telecom", "KTF", "LG Uplus"),
+    # Taiwan
+    Country(
+        "Taiwan", "Chunghwa Telecom", "Far EasTone Telecommunications", "Taiwan Mobile"
+    ),
 ]

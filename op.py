@@ -97,7 +97,18 @@ operators = [
         "MTN", "South Africa", "non_member", 289, "B1", "B3", "B40", "n78", "n1", "n3"
     ),
     Operator(
-        "Vodafone Group", "UK", "member_active", 286, "B1", "B3", "B7", "B8", "B20", "B32", "B38", "n78"
+        "Vodafone Group",
+        "UK",
+        "member_active",
+        286,
+        "B1",
+        "B3",
+        "B7",
+        "B8",
+        "B20",
+        "B32",
+        "B38",
+        "n78",
     ),
     Operator(
         "Telefonica",
@@ -314,4 +325,28 @@ operators = [
         "n77",
         "n257",
     ),  # 4G確度高い Softbank web
+    Operator(
+        "SK telecom",
+        "Korea",
+        "member_active",
+        30,
+        "B1",
+        "B3",
+        "B5",
+        "B7",
+        "n78",
+        "n257",
+    ),  # telecomのtは小文字を使っているので要注意 大文字だと拾わない
+    Operator(
+        "Chunghwa Telecom",
+        "Taiwan",
+        "member_active",
+        13,
+        "B1",
+        "B3",
+        "B7",
+        "n1",
+        "n78",
+        "n257",
+    ),  #
 ]
