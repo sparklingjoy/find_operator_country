@@ -13,24 +13,26 @@ class Operator:
 
 # オペレーターのインスタンスを作成
 operators = [
+    # Jerry より https://zhuanlan.zhihu.com/p/616370411 teamsにあり
     Operator(
         "China Mobile",
         "China",
         "member_inactive",
-        986,
-        "B1",
-        "B38",
+        997,
+        "B3",  # 2024/06/11 追加
+        "B8",  # 2024/06/11 追加
+        "B34",
         "B39",
         "B40",
         "B41",
-        "n78",
+        "n41",  # 2024/06/11 修正 n78を消去
         "n79",
     ),
     Operator(
         "Bharti Airtel",
         "India",
         "member_active",
-        497,
+        562,
         "B3",
         "B5",
         "B8",
@@ -44,7 +46,7 @@ operators = [
         "Reliance Jio",
         "India",
         "member_active",
-        436,
+        470,
         "B3",
         "B5",
         "B40",
@@ -56,16 +58,28 @@ operators = [
         "China Telecom",
         "China",
         "member_inactive",
-        391,
-        "B1",
+        413,
+        "B1",  # 2024/6/11 追加修正
         "B3",
-        "B40",
+        "B5",
         "B41",
+        "n1",  # 2024/6/11 追加修正
+        "n77",
         "n78",
-        "n38",
     ),
     Operator(
-        "China Unicom", "China", "member_inactive", 928, "B1", "B3", "B41", "n78", "n41"
+        "China Unicom",
+        "China",
+        "member_inactive",
+        333,
+        "B1",  # 2024/6/11 追加修正
+        "B3",
+        "B8",
+        "B40",
+        "B41",
+        "n1",  # 2024/6/11 追加修正
+        "n77",
+        "n78",
     ),
     Operator(
         "China Broadcast",
@@ -75,13 +89,13 @@ operators = [
         "B28",
         "n28",
         "n77",
-        "n78",
+        "n79",
     ),
     Operator(
         "America Movil",
         "Mexico",
         "non_member",
-        308,
+        312,
         "B2",
         "B4",
         "B7",
@@ -94,13 +108,13 @@ operators = [
         "n78",
     ),
     Operator(
-        "MTN", "South Africa", "non_member", 289, "B1", "B3", "B40", "n78", "n1", "n3"
+        "MTN", "South Africa", "non_member", 287, "B1", "B3", "B40", "n78", "n1", "n3"
     ),
     Operator(
         "Vodafone Group",
         "UK",
         "member_active",
-        286,
+        323,
         "B1",
         "B3",
         "B7",
@@ -114,7 +128,7 @@ operators = [
         "Telefonica",
         "Spain",
         "member_active",
-        278,
+        299,
         "B3",
         "B7",
         "B20",
@@ -130,7 +144,7 @@ operators = [
         "n257",
         "n258",
     ),
-    Operator("Orange", "France", "member_active", 249, "B1", "B3", "B7", "B20", "B28"),
+    Operator("Orange", "France", "member_active", 243, "B1", "B3", "B7", "B20", "B28"),
     Operator(
         "Vodafone Idea",
         "India",
@@ -168,7 +182,7 @@ operators = [
         "Deutsche Telekom",
         "Germany",
         "member_active",
-        212,
+        256,
         "B1",
         "B3",
         "B7",
@@ -180,7 +194,7 @@ operators = [
         "PT Telekomunikasi",
         "Indonesia",
         "non_member",
-        176,
+        159,
         "B3",
         "B5",
         "B8",
@@ -190,7 +204,7 @@ operators = [
         "n3",
         "n40",
     ),
-    Operator("Telenor", "Norway", "non_member", 172, "B7", "B20"),
+    Operator("Telenor", "Norway", "non_member", 93, "B7", "B20"),
     Operator("Axiata", "Malaysia", "non_member", 163, "B1", "B3", "B7", "B40", "B41"),
     Operator("Emirates", "UAE", "non_member", 159, "B3", "B7", "B20", "B42", "n78"),
     Operator(
@@ -212,7 +226,7 @@ operators = [
         "n260",
         "n261",
     ),  # duplicated n77 was removed 2024/3/25
-    Operator("Vodacom", "South Africa", "non_member", 133, "B8", "B3", "B42"),
+    Operator("Vodacom", "South Africa", "non_member", 155, "B8", "B3", "B42"),
     Operator("Ooredoo", "Qatar", "non_member", 121, "B3", "B8", "B1"),
     # T-Mobile may be part of Deutche Telecom, but left as it is
     Operator(
@@ -237,7 +251,7 @@ operators = [
     ),
     Operator("BSNL Mobile", "India", "non_member", 106, "B3", "B8", "B41"),
     Operator(
-        "CK Hutchison", "Hong Kong", "non_member", 100, "B1", "B8", "B3", "B7", "B40"
+        "CK Hutchison", "Hong Kong", "non_member", 120, "B1", "B8", "B3", "B7", "B40"
     ),
     Operator("MTN Irancell", "Iran", "non_member", 92, "B1", "B8", "B3", "B7", "B42"),
     Operator(
