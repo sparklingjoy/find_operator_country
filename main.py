@@ -53,10 +53,10 @@ def band_to_freq(band_to_evaluate):
                 + " ~ "
                 + str(band.maximum)
                 + " MHz  ("
-                + str(band.maximum - band.minimum)
+                + str(band.span_is())
                 + " MHz)"
             )
-            print(frequency_range)
+            # print(frequency_range)
             matched_frequency.append(frequency_range)
     return matched_frequency
 
@@ -151,7 +151,7 @@ for band in asked_band:
 
 with st.sidebar.expander("Main and sub bands"):
     st.write(
-        "LTE/4G bands start with 'B' and 5G with 'n' and are called main bands. One of the mobile base station OEMs uses sub-bands such as 'B42C' to describe the partial coverage of the main band. The left side menu covers both main and sub-bands. The right main menu covers the main bands only, as the sub-bands and operator/country information are not publicly known, although the sub-bands appear to have been used for applications in different countries for some time."
+        "LTE/4G bands start with 'B' and 5G with 'n' and are called main bands. One of the mobile base station OEMs uses sub-bands such as 'B42C' to describe the partial coverage of the main band. In this application, the left side menu covers both main and sub-bands. The right main menu covers the main bands only, as the sub-bands and operator/country information are not publicly known, although the sub-bands appear to have been used for applications in different countries for some time."
     )
 
 #############################
@@ -253,7 +253,7 @@ for player in asked_operators:
                 st.markdown(f"- {player} is active on O-RAN")
             # This list should be like [{},{},{},.....]
             band_set = set(operator.bands)
-            list_bands.append(band_set)     
+            list_bands.append(band_set)
 
 # 共通のバンドを求める、reduceで再帰的にlist_operatorからAND(intersect)を取っている
 if list_bands:
@@ -268,7 +268,9 @@ if len(asked_operators) > 1:
         sorted_bands = sorted(list(intersection), key=sort_key)
         st.markdown(f"- {join_strings(sorted_bands)}")
     else:
-        st.write(f"**No common band** found between **{join_strings(asked_operators)}**")
+        st.write(
+            f"**No common band** found between **{join_strings(asked_operators)}**"
+        )
 
     st.write("")
 
@@ -294,7 +296,8 @@ st.write("")
 st.write("")
 with st.expander("Source and coverage"):
     st.write(
-        "This app is a compilation of public domain web information on the top 30 mobile operators. They represent 85\% of all subscribers, but 15\% are not captured. Here are the main reference web links",
+        "This app is a compilation of public domain web information on the top 36 mobile operators. In 2024, there were 8.6 billion world wide mobile phone subscribers. The 36 mobile operators represent 84\% of all subscribers. Here are the main reference web links.   \n",
+        "https://www.ericsson.com/en/reports-and-papers/mobility-report/dataforecasts/mobile-subscriptions-outlook  (Highly recommended)  \n",
         "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
         "https://en.wikipedia.org/wiki/LTE_frequency_bands",
         "https://en.wikipedia.org/wiki/5G_NR_frequency_bands",
