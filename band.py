@@ -14,10 +14,13 @@ class Band:
     def in_mode(self, value):
         return self.duplex == value
 
+    def span_is(self):
+        return self.maximum - self.minimum
+
 
 # バンドのインスタンスを作成
 bands = [
-    # LTE bands
+    # LTE or sub bands
     Band("B1", 2110, 2170, "FDD"),
     Band("B1A", 2110, 2130, "FDD"),  # 2024/4/4追加
     Band("B1B", 2110, 2165, "FDD"),  # 2024/4/4追加
