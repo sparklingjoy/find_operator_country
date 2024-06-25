@@ -215,7 +215,7 @@ if len(asked_bands) > 1:
 
 with st.expander("Can not find your band?"):
     st.write(
-        "If an operator is trying to migrate from LTE to 5G, they may be found with a B number but not an n number. Sub-bands that are part of the main band are called B42A or B78G, the relationship between operators and regions is not publicly available and is not included in this section.",
+        "If an operator is trying to migrate from LTE to 5G, they may be found with a B number but not an n number. Sub-bands that are part of the main band are called B42A or B78G, the relationship between operators and regions is not publicly available and is not included in this section. New bands such as n104 do not appear in this section if they are not yet used by the carrier. ",
     )
 
 # Find Operator Information
