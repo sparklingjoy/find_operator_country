@@ -310,7 +310,6 @@ operators = [
         "n3",
         "n78",
         "n77",
-        "n79",
         "n257",
     ),  # 確度高い KDDI web site
     Operator(
@@ -337,6 +336,7 @@ operators = [
         "B42",
         "B41",
         "n77",
+        "n79",
         "n257",
     ),  # 4G確度高い Softbank web
     Operator(
