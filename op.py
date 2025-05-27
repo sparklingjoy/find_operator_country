@@ -38,7 +38,7 @@ operators = [
         "B8",
         "B1",
         "B40",
-        "n28",
+        # "n28", 2025/5/8 削除
         "n78",
         "n258",
     ),
@@ -47,8 +47,8 @@ operators = [
         "India",
         "member_active",
         470,
-        "B3",
-        "B5",
+        "n3", # 2025/5/8 B3からn3に修正
+        "n5", # 2025/5/8 B3からn5に修正
         "B40",
         "n28",
         "n78",
@@ -74,11 +74,11 @@ operators = [
         333,
         "B1",  # 2024/6/11 追加修正
         "B3",
-        "B8",
+        "B5", # 2025/5/8 B8からB5に修正
         "B40",
         "B41",
         "n1",  # 2024/6/11 追加修正
-        "n77",
+        "n5",  # 2025/5/8 n77からn5に修正
         "n78",
     ),
     Operator(
@@ -100,16 +100,16 @@ operators = [
         "B4",
         "B7",
         "B5",
-        "B66",
+        # "B66", 2025/5/9 削除 peplexity で調査
         "B28",
         "n7",
-        "n41",
-        "n66",
+        # "n41", 2025/5/9 削除 peplexity で調査
+        # "n66", 2025/5/9 削除 peplexity で調査
         "n78",
     ),
     Operator(
-        "MTN", "South Africa", "non_member", 287, "B1", "B3", "B40", "n78", "n1", "n3"
-    ),
+        "MTN", "South Africa", "non_member", 287, "B1", "B3", "B7", "B20", "B28", "B8", "n78", "n28"
+    ), # 2025/5/9 修正 perplexity で調査
     Operator(
         "Vodafone Group",
         "UK",
@@ -247,8 +247,8 @@ operators = [
         "n261",
     ),
     Operator(
-        "Viettel", "Vietnam", "non_member", 110, "B1", "B3", "B7", "n78", "n257", "n258"
-    ),
+        "Viettel", "Vietnam", "non_member", 110, "B1", "B3", "B7", "B28", "B29", "n28", "n78", "n257", "n258"
+    ), # 2025/5/27 added B28, B29, n28  B2-B2′ block (713–723 MHz and 768–778 MHz) https://www.rcrwireless.com/20250523/5g/viettel-700-mhz-5g
     Operator("BSNL Mobile", "India", "non_member", 106, "B3", "B8", "B41"),
     Operator(
         "CK Hutchison", "Hong Kong", "non_member", 120, "B1", "B8", "B3", "B7", "B40"
@@ -310,6 +310,7 @@ operators = [
         "n3",
         "n78",
         "n77",
+        "n79",
         "n257",
     ),  # 確度高い KDDI web site
     Operator(
@@ -336,7 +337,6 @@ operators = [
         "B42",
         "B41",
         "n77",
-        "n79",
         "n257",
     ),  # 4G確度高い Softbank web
     Operator(
