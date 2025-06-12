@@ -32,7 +32,7 @@ operators = [
         "Bharti Airtel",
         "India",
         "member_active",
-        562,
+        390, # udapted 2025/6/12
         "B3",
         "B5",
         "B8",
@@ -46,7 +46,7 @@ operators = [
         "Reliance Jio",
         "India",
         "member_active",
-        470,
+        470, # udapted 2025/6/12 https://www.business-standard.com/industry/news/reliance-jio-leads-mobile-subscriber-additions-in-march-trai-data-125050701676_1.html
         "n3", # 2025/5/8 B3からn3に修正
         "n5", # 2025/5/8 B3からn5に修正
         "B40",
@@ -149,7 +149,7 @@ operators = [
         "Vodafone Idea",
         "India",
         "member_active",
-        231,
+        205, # udapted 2025/6/12
         "B3",
         "B8",
         "B1",
@@ -249,7 +249,7 @@ operators = [
     Operator(
         "Viettel", "Vietnam", "non_member", 110, "B1", "B3", "B7", "B28", "B29", "n28", "n78", "n257", "n258"
     ), # 2025/5/27 added B28, B29, n28  B2-B2′ block (713–723 MHz and 768–778 MHz) https://www.rcrwireless.com/20250523/5g/viettel-700-mhz-5g
-    Operator("BSNL Mobile", "India", "non_member", 106, "B3", "B8", "B41"),
+    Operator("BSNL Mobile", "India", "non_member", 89.6, "B3", "B8", "B41"), # updated 2025/6/12
     Operator(
         "CK Hutchison", "Hong Kong", "non_member", 120, "B1", "B8", "B3", "B7", "B40"
     ),
