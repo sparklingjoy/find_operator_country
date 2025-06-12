@@ -270,7 +270,7 @@ operators = [
         "NTT Docomo",
         "Japan",
         "member_active",
-        83,
+        91, #updated 2025/6/12
         "B28",
         "B18",
         "B26",
@@ -292,7 +292,7 @@ operators = [
         "Rakuten Mobile",
         "Japan",
         "member_active",
-        80,
+        8.6, #updated 2025/6/12
         "B3",
         "B18",
         "B28",
@@ -307,7 +307,7 @@ operators = [
         "KDDI",
         "Japan",
         "member_active",
-        66,
+        70, #updated 2025/6/12
         "B28",
         "B18",
         "B26",
@@ -329,7 +329,7 @@ operators = [
         "Softbank",
         "Japan",
         "member_active",
-        54,
+        55, #updated 2025/6/12
         "B12",
         "B28",
         "B17",
