@@ -244,11 +244,11 @@ for player in asked_operators:
     for operator in operators:
         if operator.name == player:
             st.write(
-                f"**{player}** uses {len(operator.bands)} bands in **{len(country_set)}** countries with a total of **{operator.subscribers}** million subscribers, headquartered in **{operator.headquarters}**"
+                f"In **{operator.headquarters}** alone, **{player}** uses following {len(operator.bands)} bands and serves {operator.subscribers} million subscribers.  {player} operates in: {join_strings(country_set)}. "
             )
             sorted_bands = sorted(operator.bands, key=sort_key)
             st.markdown(f"- {join_strings(sorted_bands)}")
-            st.markdown(f"- {join_strings(country_set)}")
+            # st.markdown(f"- {player} operates in: {join_strings(country_set)}")
             if operator.oran_status == "member_active":
                 st.markdown(f"- {player} is active on O-RAN")
             # This list should be like [{},{},{},.....]
@@ -298,6 +298,7 @@ with st.expander("Source and coverage"):
     st.write(
         "This app is a compilation of public domain web information on the top 36 mobile operators. In 2024, there were 8.6 billion world wide mobile phone subscribers. The 36 mobile operators represent 84\% of all subscribers. Here are the main reference web links.   \n",
         "https://www.ericsson.com/en/reports-and-papers/mobility-report/dataforecasts/mobile-subscriptions-outlook  (Highly recommended)  \n",
+        "https://www.frequencycheck.com/carriers",
         "https://en.wikipedia.org/wiki/List_of_mobile_network_operators",
         "https://en.wikipedia.org/wiki/LTE_frequency_bands",
         "https://en.wikipedia.org/wiki/5G_NR_frequency_bands",

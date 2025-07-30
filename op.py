@@ -25,6 +25,7 @@ operators = [
         "B39",
         "B40",
         "B41",
+        "n28", # 2025/07/30 https://www.frequencycheck.com/carriers
         "n41",  # 2024/06/11 修正 n78を消去
         "n79",
     ),
@@ -47,6 +48,8 @@ operators = [
         "India",
         "member_active",
         470, # udapted 2025/6/12 https://www.business-standard.com/industry/news/reliance-jio-leads-mobile-subscriber-additions-in-march-trai-data-125050701676_1.html
+        "B3", # 2025/7/30 追加 https://www.frequencycheck.com/carriers
+        "B5", # 2025/7/30 追加 https://www.frequencycheck.com/carriers
         "n3", # 2025/5/8 B3からn3に修正
         "n5", # 2025/5/8 B3からn5に修正
         "B40",
@@ -62,9 +65,9 @@ operators = [
         "B1",  # 2024/6/11 追加修正
         "B3",
         "B5",
-        "B41",
+        "B40", # 2025/7/30 B41からB40に修正 
         "n1",  # 2024/6/11 追加修正
-        "n77",
+        "n5",  # 2025/7/30 追加 https://www.frequencycheck.com/carriers
         "n78",
     ),
     Operator(
@@ -75,10 +78,10 @@ operators = [
         "B1",  # 2024/6/11 追加修正
         "B3",
         "B5", # 2025/5/8 B8からB5に修正
+        "B8", # 2025/7/30 追加 https://www.frequencycheck.com/carriers
         "B40",
-        "B41",
         "n1",  # 2024/6/11 追加修正
-        "n5",  # 2025/5/8 n77からn5に修正
+        "n8",  # 2025/7/30 n5からn8に修正 https://www.frequencycheck.com/carriers
         "n78",
     ),
     Operator(
@@ -92,24 +95,17 @@ operators = [
         "n79",
     ),
     Operator(
-        "America Movil",
+        "Telcel", # 2025/7/30 America MovilをTelcelに変更
         "Mexico",
         "non_member",
         312,
-        "B2",
         "B4",
-        "B7",
-        "B5",
-        # "B66", 2025/5/9 削除 peplexity で調査
-        "B28",
-        "n7",
-        # "n41", 2025/5/9 削除 peplexity で調査
-        # "n66", 2025/5/9 削除 peplexity で調査
-        "n78",
+        "B66", # 2025/5/9 削除 → 2025/7/30 復帰 https://www.frequencycheck.com/carriers
+        "n5", 
     ),
     Operator(
-        "MTN", "South Africa", "non_member", 287, "B1", "B3", "B7", "B20", "B28", "B8", "n78", "n28"
-    ), # 2025/5/9 修正 perplexity で調査
+        "MTN", "South Africa", "non_member", 287, "B3", "n78",
+    ), # 2025/7/30 削除  https://www.frequencycheck.com/carriers
     Operator(
         "Vodafone Group",
         "UK",
@@ -122,29 +118,28 @@ operators = [
         "B20",
         "B32",
         "B38",
+        "n1", # 2025/7/30 追加  https://www.frequencycheck.com/carriers
+        "n8", # 2025/7/30 追加  https://www.frequencycheck.com/carriers
         "n78",
     ),
     Operator(
-        "Telefonica",
+        "Movistar", # 2025/7/30 Telefonicaから変更  https://www.frequencycheck.com/carriers 
         "Spain",
         "member_active",
         299,
+        "B1",
         "B3",
         "B7",
+        "B8",
+        "B28",
         "B20",
-        "B38",
         "n28",
-        "n20",
-        "n8",
         "n3",
         "n1",
-        "n38",
-        "n7",
         "n78",
-        "n257",
         "n258",
     ),
-    Operator("Orange", "France", "member_active", 243, "B1", "B3", "B7", "B20", "B28"),
+    Operator("Orange", "France", "member_active", 243, "B1", "B3", "B7", "B20", "B28", "n1","n78",),
     Operator(
         "Vodafone Idea",
         "India",
@@ -165,19 +160,22 @@ operators = [
         217,
         "B2",
         "B4",
+        "B5",
         "B12",
         "B14",  # 2024/3/14 追加 https://urgentcomm.com/2021/02/22/att-says-firstnet-band-14-buildout-more-than-90-done-adoption-tops-2-million-connections/
         "B17",
         "B29",
         "B30",
+        "B46",
+        "B48",
         "B66",
         "n2",
         "n5",
+        "n66", 
         "n77",
-        "n258",
         "n260",
         "n261",
-    ),  # 確度高い AT&T web+　Wilson amp情報
+    ),  
     Operator(
         "Deutsche Telekom",
         "Germany",
@@ -186,29 +184,31 @@ operators = [
         "B1",
         "B3",
         "B7",
+        "B8",
         "B20",
         "B28",
-        "n28",
+        "B32",
+        "n1",
+        "n3",
+        "n77",
+        "n78",
     ),
     Operator(
-        "PT Telekomunikasi",
+        "Telecomsel",
         "Indonesia",
         "non_member",
         159,
         "B3",
-        "B5",
         "B8",
         "B40",
         "n40",
         "n1",
-        "n3",
-        "n40",
     ),
-    Operator("Telenor", "Norway", "non_member", 93, "B7", "B20"),
-    Operator("Axiata", "Malaysia", "non_member", 163, "B1", "B3", "B7", "B40", "B41"),
-    Operator("Emirates", "UAE", "non_member", 159, "B3", "B7", "B20", "B42", "n78"),
+    Operator("Telenor", "Norway", "non_member", 93, "B3", "B7", "B20"),
+    Operator("Celcomdigi", "Malaysia", "non_member", 163, "B1", "B3", "B7", "n26", "n28", "n78"),
+    Operator("du", "UAE", "non_member", 159, "B3", "B1", "B8", "B20", "B28", "n78"),
     Operator(
-        "VEON", "Netherlands", "non_member", 157, "B1", "B3", "B7", "B20", "B28", "n28"
+        "KPN", "Netherlands", "non_member", 157, "B3", "B7", "B20", "B38", "n1", "n78", "n28"
     ),
     Operator(
         "Verizon",
@@ -218,6 +218,9 @@ operators = [
         "B13",
         "B2",
         "B4",
+        "B5",
+        "B46",
+        "B48",
         "B66",
         "n2",
         "n5",
@@ -247,13 +250,12 @@ operators = [
         "n261",
     ),
     Operator(
-        "Viettel", "Vietnam", "non_member", 110, "B1", "B3", "B7", "B28", "B29", "n28", "n78", "n257", "n258"
-    ), # 2025/5/27 added B28, B29, n28  B2-B2′ block (713–723 MHz and 768–778 MHz) https://www.rcrwireless.com/20250523/5g/viettel-700-mhz-5g
-    Operator("BSNL Mobile", "India", "non_member", 89.6, "B3", "B8", "B41"), # updated 2025/6/12
+        "Viettel", "Vietnam", "non_member", 110, "B3", ), 
+    Operator("BSNL Mobile", "India", "non_member", 89.6, "B3", "B5", "B28", "B1", "B41", "n28", "n78", "n258"), # updated 2025/7/30
     Operator(
-        "CK Hutchison", "Hong Kong", "non_member", 120, "B1", "B8", "B3", "B7", "B40"
+        "CMHK", "Hong Kong", "non_member", 120,  "B3", "B7", "B40", "n1", "n78", "n79"
     ),
-    Operator("MTN Irancell", "Iran", "non_member", 92, "B1", "B8", "B3", "B7", "B42"),
+    Operator("MTN Irancell", "Iran", "non_member", 92, "B3", "B7", "B42", "n78"),
     Operator(
         "Mobile TeleSystems",
         "Russia",
@@ -261,10 +263,13 @@ operators = [
         84,
         "B3",
         "B7",
+        "B8",
         "B20",
+        "B34",
         "B38",
-        "B40",
-        "B46",
+        "n7",
+        "n79",
+        "n258",
     ),
     Operator(
         "NTT Docomo",
@@ -300,9 +305,9 @@ operators = [
         "n77",
         "n257",
     ),
-    Operator("Globe Telecom", "Philippines", "non_member", 54, "B28", "B40", "B41"),
-    Operator("PLDT", "Philippines", "non_member", 53, "B5", "B28", "B41"),
-    Operator("MegaFon", "Russia", "non_member", 71, "B3", "B7", "B20", "B38"),
+    Operator("Globe Telecom", "Philippines", "non_member", 54, "B28", "B3", "B7", "B41", "n41", "n78"),
+    Operator("Smart", "Philippines", "non_member", 53, "B1", "B3", "B5", "B28", "B40", "B41", "n28", "n41", "n78"),
+    Operator("MegaFon", "Russia", "non_member", 71, "B1", "B3", "B7", "B8", "B34", "B41", "n1", "n7", "n257", "n258"),
     Operator(
         "KDDI",
         "Japan",
@@ -371,8 +376,8 @@ operators = [
         "B1",
         "B3",
         "B7",
+        "B8",
         "n1",
         "n78",
-        "n257",
-    ),  #
+    ),  
 ]
